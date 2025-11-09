@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+		"target": "ES2020",
+		"module": "ESNext",
+		"lib": ["ES2020", "DOM"],
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"allowJs": true,
+		"checkJs": false,
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"declaration": true,
+		"declarationMap": true,
+		"outDir": "./dist",
+		"rootDir": "./src",
+		"baseUrl": ".",
+		"paths": {
+			"vite-plugin-butterfly-effect/runtime": ["src/runtime.ts"],
+			"vite-plugin-butterfly-effect/overlay": ["src/overlay.ts"]
+		}
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "dist", "**/*.spec.ts"]
+}

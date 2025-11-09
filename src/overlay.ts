@@ -1,4 +1,4 @@
-import { ButterflyEvents } from "./runtime";
+import { ButterflyEvents } from "vite-plugin-butterfly-effect/runtime";
 import type { ButterflyEffectOptions } from "./types";
 
 // Butterfly Canvas Implementation
