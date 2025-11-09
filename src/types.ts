@@ -25,3 +25,5 @@ export interface ButterflyEvent {
 	type: "state" | "effect";
 	nextValue?: unknown;
 }
+
+export type ButterflyEventListener = (event: ButterflyEvent) => void;

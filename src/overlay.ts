@@ -97,4 +97,14 @@ export function initOverlay(options: ButterflyEffectOptions) {
 	}
 
 	// Wait for DOM to be ready
+	if (document.readyState === "loading") {
+		// DOMの解釈(DOMツリーの構築)された時に発火
+		document.addEventListener("DOMContentLoaded", () => {
+			document.body.appendChild(container);
+			initOverlay();
+		});
+	} else {
+		document.body.appendChild(container);
+		initOverlay();
+	}
 }

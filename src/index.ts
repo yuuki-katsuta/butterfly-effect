@@ -1,8 +1,10 @@
 import type { Plugin } from "vite";
+import { transformReactCode } from "./transform.js";
 import type { ButterflyEffectOptions } from "./types";
 
 const PLUGIN_NAME = "vite-plugin-butterfly-effect";
 const RUNTIME_ENTRY_ID = "\0butterfly-effect-runtime";
+const OVERLAY_ENTRY_ID = "\0butterfly-effect-overlay";
 
 export default function butterflyEffect(
 	options: ButterflyEffectOptions,
@@ -38,8 +40,11 @@ export default function butterflyEffect(
 		},
 		// モジュールの解決
 		resolveId(id) {
-			if (id === RUNTIME_ENTRY_ID) {
+			if (id === OVERLAY_ENTRY_ID || id === RUNTIME_ENTRY_ID) {
 				return id;
+			}
+			if (id === "\0butterfly-effect-runtime") {
+				return RUNTIME_ENTRY_ID;
 			}
 		},
 		// モジュールの中身を提供
@@ -57,6 +62,37 @@ export default function butterflyEffect(
             trackState: ${trackState},
           });
         `;
+			}
+
+			if (id === RUNTIME_ENTRY_ID) {
+				//
+			}
+		},
+		// メインエントリーポイントにオーバーレイ初期化コードを注入
+		transform(code, id) {
+			// main.tsx または main.ts に対してオーバーレイ初期化コードを注入
+			if (id.match(/\/main\.(ts|tsx|js|jsx)$/)) {
+				return {
+					code: `import '${OVERLAY_ENTRY_ID}';\n${code}`,
+					map: null,
+				};
+			}
+			// TSX/JSXファイルをスキップ
+			if (!id.match(/\.(jsx|tsx)$/)) {
+				return null;
+			}
+
+			// TSX/JSXファイルを変換
+			try {
+				const result = transformReactCode(code, {
+					trackEffect,
+					trackState,
+				});
+
+				return result;
+			} catch (error) {
+				console.error(`[${PLUGIN_NAME}] Error transforming ${id}:`, error);
+				return null;
 			}
 		},
 	};

@@ -8,7 +8,7 @@ export default defineConfig({
 		react(),
 		butterflyEffect({
 			enabled: true,
-			showStats: true,
+			showStatus: true,
 			animationSpeed: 1000,
 			maxButterflies: 10,
 		}),
