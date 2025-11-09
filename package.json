@@ -4,7 +4,9 @@
 	"description": "A Vite plugin that visualizes React useEffect and state update chains as beautiful butterfly effects",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "vitest",
+		"test:ui": "vitest --ui",
+		"test:coverage": "vitest --coverage"
 	},
 	"keywords": [
 		"vite",
@@ -21,6 +23,9 @@
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.4",
 		"@types/node": "^24.10.0",
+		"@vitest/coverage-v8": "^4.0.8",
+		"@vitest/ui": "^4.0.8",
+		"happy-dom": "^15.11.7",
 		"tsup": "^8.5.0",
 		"typescript": "^5.9.3",
 		"vite": "^7.2.2",
