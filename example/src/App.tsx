@@ -5,13 +5,24 @@ import "./App.css";
 
 function App() {
 	const [count, setCount] = useState(0);
+	const [doubleCount, setDoubleCount] = useState(0);
+	const [tripleCount, setTripleCount] = useState(0);
 	const [total, setTotal] = useState(0);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: デモ用コードなので依存配列を無視
+	// 🦋 Effect Chain 1
 	useEffect(() => {
-		console.log("🦋");
-		setTotal((prev) => prev + 1);
+		setDoubleCount(count * 2);
 	}, [count]);
+
+	// 🦋 Effect Chain 2
+	useEffect(() => {
+		setTripleCount(count * 3);
+	}, [count]);
+
+	// 🦋 Effect Chain 3
+	useEffect(() => {
+		setTotal((prev) => prev + doubleCount + tripleCount);
+	}, [doubleCount, tripleCount]);
 
 	return (
 		<>
@@ -23,19 +34,23 @@ function App() {
 					<img src={reactLogo} className="logo react" alt="React logo" />
 				</a>
 			</div>
-			<h1>Vite + React</h1>
+			<h1>Effect Chain Demo</h1>
 			<div className="card">
 				<button type="button" onClick={() => setCount((count) => count + 1)}>
-					count is {count}
+					Click me! (count: {count})
 				</button>
-				<p>total is {total}</p>
-				<p>
-					Edit <code>src/App.tsx</code> and save to test HMR
-				</p>
+				<div style={{ marginTop: "20px", fontSize: "18px" }}>
+					<p>
+						<strong>Double Count:</strong> {doubleCount}
+					</p>
+					<p>
+						<strong>Triple Count:</strong> {tripleCount}
+					</p>
+					<p>
+						<strong>Total:</strong> {total}
+					</p>
+				</div>
 			</div>
-			<p className="read-the-docs">
-				Click on the Vite and React logos to learn more
-			</p>
 		</>
 	);
 }
